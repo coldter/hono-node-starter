@@ -1,0 +1,50 @@
+{
+  "name": "hono-node-starter",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "load-env": "dotenv -e .env.local --",
+    "dev": "dotenv -e .env.local -- tsx watch --clear-screen=false ./src/main.ts",
+    "start": "node --import=tsx ./src/main.ts",
+    "build": "tsup",
+    "check": "tsc --noEmit",
+    "fmt": "npx biome format . --write && npx biome check . --write",
+    "db:generate": "npm run load-env drizzle-kit generate --config=drizzle.config.ts",
+    "db:push": "npm run load-env drizzle-kit push --config=drizzle.config.ts",
+    "db:check": "npm run load-env drizzle-kit check --config=drizzle.config.ts",
+    "db:clean": "npm run load-env tsx src/database/dbClean.ts",
+    "db:up": "npm run load-env drizzle-kit up --config=drizzle.config.ts",
+    "db:drop": "npm run load-env drizzle-kit drop --config=drizzle.config.ts",
+    "db:studio": "npm run load-env drizzle-kit studio --port 3333  --config=drizzle.config.ts",
+    "db:migrate": "npm run load-env tsx src/database/migrate.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hono/node-server": "^1.12.0",
+    "@hono/zod-openapi": "^0.14.8",
+    "@scalar/hono-api-reference": "^0.5.121",
+    "chalk": "^5.3.0",
+    "cli-highlight": "^2.1.11",
+    "drizzle-orm": "^0.32.0",
+    "hono": "^4.4.12",
+    "lucia": "^3.2.0",
+    "pg": "^8.12.0",
+    "typeid-js": "^1.0.0",
+    "winston": "^3.13.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.3",
+    "@types/node": "^20.14.10",
+    "@types/pg": "^8.11.6",
+    "dotenv-cli": "^7.4.2",
+    "drizzle-kit": "^0.23.0",
+    "tsup": "^8.2.2",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}
