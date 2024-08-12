@@ -34,7 +34,7 @@
     "lucia": "^3.2.0",
     "pg": "^8.12.0",
     "typeid-js": "^1.0.0",
-    "winston": "^3.13.1",
+    "winston": "^3.14.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {
