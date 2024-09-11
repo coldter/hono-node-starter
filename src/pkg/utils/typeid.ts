@@ -1,5 +1,5 @@
 import { customType } from "drizzle-orm/pg-core";
-import { typeid, TypeID } from "typeid-js";
+import { TypeID, typeid } from "typeid-js";
 import { z } from "zod";
 
 const typeIdLength = 26;

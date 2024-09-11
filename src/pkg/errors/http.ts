@@ -4,6 +4,8 @@ import { z } from "@hono/zod-openapi";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { StatusCode } from "hono/utils/http-status";
+import pg from "pg";
+import { PostgresError } from "pg-error-enum";
 import { ZodError } from "zod";
 
 const ErrorCode = z.enum([
@@ -94,10 +96,12 @@ export function handleZodError(
   if (!result.success) {
     return c.json<z.infer<typeof ErrorSchema>>(
       {
+        success: false,
         error: {
           code: "BAD_REQUEST",
           message: parseZodErrorMessage(result.error),
         },
+        requestId: c.get("requestId"),
       },
       { status: 400 },
     );
@@ -124,10 +128,12 @@ export function handleError(err: Error, c: Context<HonoEnv>): Response {
 
     return c.json<z.infer<typeof ErrorSchema>>(
       {
+        success: false,
         error: {
           code: err.code,
           message: err.message,
         },
+        requestId: c.get("requestId"),
       },
       { status: err.status },
     );
@@ -147,12 +153,43 @@ export function handleError(err: Error, c: Context<HonoEnv>): Response {
     const code = statusToCode(err.status);
     return c.json<z.infer<typeof ErrorSchema>>(
       {
+        success: false,
         error: {
           code,
           message: err.message,
         },
+        requestId: c.get("requestId"),
       },
       { status: err.status },
+    );
+  }
+
+  if (err instanceof pg.DatabaseError) {
+    c.get("logger").debug("DatabaseError", err);
+    if (err.code === PostgresError.UNIQUE_VIOLATION) {
+      return c.json<z.infer<typeof ErrorSchema>>(
+        {
+          success: false,
+          error: {
+            code: "NOT_UNIQUE",
+            message: `This resource already exists ${err.message}`,
+          },
+          requestId: c.get("requestId"),
+        },
+        { status: 400 },
+      );
+    }
+
+    return c.json<z.infer<typeof ErrorSchema>>(
+      {
+        success: false,
+        error: {
+          code: "BAD_REQUEST",
+          message: err.message,
+        },
+        requestId: c.get("requestId"),
+      },
+      { status: 400 },
     );
   }
 
@@ -164,6 +201,7 @@ export function handleError(err: Error, c: Context<HonoEnv>): Response {
     message: err?.message,
     cause: err?.cause,
     stack: err?.stack,
+    constructor: err?.constructor.name,
   });
 
   return c.json(
@@ -177,28 +215,34 @@ export function handleError(err: Error, c: Context<HonoEnv>): Response {
     { status: 500 },
   );
 }
+
 export const ErrorSchema = z.object({
+  success: z.boolean(),
+  // success: z.literal(false),
   error: z.object({
     code: ErrorCode.openapi({
       description: "A machine readable error code.",
       example: "INTERNAL_SERVER_ERROR",
     }),
     message: z.string().openapi({ description: "A human readable explanation of what went wrong" }),
-    // requestId: z.string().openapi({
-    //   description: "Please always include the requestId in your error report",
-    //   example: "req_1234",
-    // }),
+  }),
+  requestId: z.string().optional().openapi({
+    description: "Please always include the requestId in your error report",
+    example: "req_1234",
   }),
 });
+
+export type TErrorSchema = z.infer<typeof ErrorSchema>;
 
 export function errorResponse(c: Context, code: z.infer<typeof ErrorCode>, message?: string) {
   return c.json<z.infer<typeof ErrorSchema>>(
     {
+      success: false,
       error: {
         code: code,
         message: message ?? "error",
-        // requestId: c.get("requestId"),
       },
+      requestId: c.get("requestId"),
     },
     { status: codeToStatus(code) },
   );

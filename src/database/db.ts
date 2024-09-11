@@ -1,9 +1,9 @@
 import { appEnv } from "@/pkg/env/env";
+import { logger } from "@/pkg/logger/logger";
 import { DrizzleLogger } from "@/pkg/logger/sql";
 import { type NodePgDatabase, drizzle } from "drizzle-orm/node-postgres";
 import pg from "pg";
 import * as schema from "./schema";
-import { logger } from "@/pkg/logger/logger";
 
 export type Database = NodePgDatabase<typeof schema>;
 
@@ -25,10 +25,14 @@ export async function createConnection(): Promise<Database> {
 }
 
 export async function checkDbConnection(pool: pg.Pool): Promise<void> {
-  const res = await pool.query("SELECT NOW()").catch((err) => {
+  const client = await pool.connect().catch((err) => {
+    logger.error("Failed to connect to database");
+    throw new Error("Failed to connect to database", { cause: err });
+  });
+  const res = await client.query("SELECT NOW()").catch((err) => {
     logger.error("Failed to connect to database");
     throw new Error("Failed to connect to database", { cause: err });
   });
   logger.info("Connected to database", { dbTime: res.rows[0].now });
-  pool.end();
+  client.release(true);
 }

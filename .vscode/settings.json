@@ -11,5 +11,11 @@
   "editor.defaultFormatter": "biomejs.biome",
   "[ignore]": {
     "editor.defaultFormatter": "foxundermoon.shell-format"
-  }
+  },
+  "[ejs]": {
+    "editor.defaultFormatter": "besthyhy.ejs-eta-beautify"
+  },
+  "cSpell.words": [
+    "openapi"
+  ]
 }

@@ -1,25 +1,35 @@
-import { bigint, boolean, integer, pgTable, uniqueIndex, varchar } from "drizzle-orm/pg-core";
-import { typeIdDataType as publicId } from "@/pkg/utils/typeid";
 import { commonTableColumns } from "@/database/utils";
-import { relations } from "drizzle-orm";
+import { typeIdDataType as publicId } from "@/pkg/utils/typeid";
+import { isNotNull, relations } from "drizzle-orm";
+import { bigint, boolean, integer, pgTable, uniqueIndex, varchar } from "drizzle-orm/pg-core";
 
 export const roleEnum = ["user", "admin"] as const;
+export type Role = (typeof roleEnum)[number];
 
 const foreignKey = (columnName: string) => integer(columnName);
 
 // TODO: add indexes and foreign keys
 
-export const accounts = pgTable("accounts", {
-  ...commonTableColumns,
-  publicId: publicId("account", "public_id").notNull(),
-  firstName: varchar("first_name").notNull(),
-  lastName: varchar("last_name"),
-  email: varchar("email").notNull(),
-  emailVerified: boolean("email_verified").notNull().default(false),
-  role: varchar("role", { enum: roleEnum }).notNull().default("user"),
-  passwordHash: varchar("password_hash", { length: 255 }).notNull(),
-  lastLoginAt: bigint("last_login_at", { mode: "number" }),
-});
+export const accounts = pgTable(
+  "accounts",
+  {
+    ...commonTableColumns,
+    publicId: publicId("account", "public_id").notNull(),
+    firstName: varchar("first_name").notNull(),
+    lastName: varchar("last_name"),
+    email: varchar("email").notNull(),
+    emailVerified: boolean("email_verified").notNull().default(false),
+    role: varchar("role", { enum: roleEnum }).notNull().default("user"),
+    passwordHash: varchar("password_hash", { length: 255 }).notNull(),
+    lastLoginAt: bigint("last_login_at", { mode: "number" }),
+    mobile: varchar("mobile", { length: 20 }),
+  },
+  (t) => ({
+    publicIdIndex: uniqueIndex("public_id_idx_acc").on(t.publicId),
+    emailIndex: uniqueIndex("email_idx").on(t.email),
+    roleMobileIndex: uniqueIndex("role_mobile_idx").on(t.role, t.mobile).where(isNotNull(t.mobile)),
+  }),
+);
 
 export const accountRelations = relations(accounts, (r) => ({
   sessions: r.many(sessions),
@@ -41,7 +51,7 @@ export const sessions = pgTable(
     expiresAt: bigint("expires_at", { mode: "number" }).notNull(),
   },
   (t) => ({
-    publicIdIndex: uniqueIndex("public_id_idx").on(t.publicId),
+    publicIdIndex: uniqueIndex("public_id_idx_ses").on(t.publicId),
     accountIdIndex: uniqueIndex("account_id_idx").on(t.accountId),
     sessionTokenIndex: uniqueIndex("session_token_idx").on(t.sessionToken),
     expiresAtIndex: uniqueIndex("expires_at_idx").on(t.expiresAt),

@@ -1,7 +1,6 @@
 import type { App } from "@/pkg/hono/app";
-import { logger } from "@/pkg/logger/logger";
+import { setupAuthApiRoutes } from "@/routes/auth/route";
 
 export const setupApiRoutes = (app: App) => {
-  // TODO: Implement your API routes here
-  logger.info("API routes are not implemented yet", app);
+  setupAuthApiRoutes(app);
 };

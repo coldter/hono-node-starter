@@ -5,7 +5,7 @@
 ## TODO:
 - [ ] Integrate auth standard with oauth lucia.js
 - [ ] Minimal and standard way of authentication
-- [ ] Testing with `vite` 
+- [ ] Testing with `vitest` 
 - [ ] Grater support for serverless environment like Cloudflare (starting with Pages + Hyperdrive, later perhaps Queues, KV and R2) + Neon/Supabase
 - [ ] Cache support
 - [ ] Integrate opentelemetry for tracing and metrics (still learning)

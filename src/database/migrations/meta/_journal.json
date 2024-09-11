@@ -8,6 +8,13 @@
       "when": 1721658311813,
       "tag": "0000_fuzzy_aaron_stack",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1726055333567,
+      "tag": "0001_stormy_iron_fist",
+      "breakpoints": true
     }
   ]
 }

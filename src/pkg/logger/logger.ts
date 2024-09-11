@@ -2,7 +2,7 @@ import { appEnv } from "@/pkg/env/env";
 import { createLogger, format, transports } from "winston";
 
 export const logger = createLogger({
-  level: "info",
+  level: appEnv.LOG_LEVEL,
   format: format.json(),
   transports: [
     appEnv.NODE_ENV === "production"

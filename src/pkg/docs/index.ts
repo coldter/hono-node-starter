@@ -2,6 +2,12 @@ import type { App } from "@/pkg/hono/app";
 import type { HonoEnv } from "@/pkg/hono/env";
 import { apiReference } from "@scalar/hono-api-reference";
 
+const customCss: string = `
+  .darklight-reference-promo {
+      display: none !important;
+  }
+`;
+
 export const docs = (app: App, enable: boolean) => {
   if (!enable) {
     return;
@@ -22,6 +28,7 @@ export const docs = (app: App, enable: boolean) => {
         url: "openapi.json",
       },
       theme: "deepSpace",
+      customCss: customCss,
       servers: [
         {
           url: `${c.req.url.replace(/\/docs*$/, "")}`,
