@@ -28,7 +28,7 @@
   "dependencies": {
     "@hono/node-server": "^1.12.2",
     "@hono/zod-openapi": "^0.14.9",
-    "@scalar/hono-api-reference": "^0.5.144",
+    "@scalar/hono-api-reference": "^0.5.145",
     "chalk": "^5.3.0",
     "change-case": "^5.4.4",
     "cli-highlight": "^2.1.11",
