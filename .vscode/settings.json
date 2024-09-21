@@ -15,7 +15,5 @@
   "[ejs]": {
     "editor.defaultFormatter": "besthyhy.ejs-eta-beautify"
   },
-  "cSpell.words": [
-    "openapi"
-  ]
+  "cSpell.words": ["openapi", "opentelemetry", "OTEL"]
 }

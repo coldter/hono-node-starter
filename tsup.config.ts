@@ -1,7 +1,7 @@
 import { defineConfig } from "tsup";
 
 export default defineConfig({
-  entry: ["./src/main.ts"],
+  entry: ["./src/main.ts", "./src/tracing.ts"],
   outDir: ".output",
   format: "esm",
   target: "esnext",
@@ -11,6 +11,7 @@ export default defineConfig({
   treeshake: true,
   // noExternal: [/^@<our-app>\/.*/],
   minify: false,
+  keepNames: true,
   banner: {
     js: [
       `import { createRequire } from 'module';`,
@@ -20,5 +21,6 @@ export default defineConfig({
   },
   esbuildOptions: (options) => {
     options.legalComments = "none";
+    options.platform = "node";
   },
 });

@@ -1,6 +1,8 @@
 import type { HonoEnv } from "@/pkg/hono/env";
+import { inActiveSpan } from "@/pkg/otel/helpers";
 import { parseZodErrorMessage } from "@/pkg/utils/zod-error";
 import { z } from "@hono/zod-openapi";
+import { SpanStatusCode } from "@opentelemetry/api";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { StatusCode } from "hono/utils/http-status";
@@ -110,6 +112,10 @@ export function handleZodError(
 }
 
 export function handleError(err: Error, c: Context<HonoEnv>): Response {
+  inActiveSpan((span) => {
+    // TODO: add more attributes
+    span?.recordException(err);
+  });
   if (err instanceof ZodError) {
     return handleZodError({ success: false, error: err }, c) as Response;
   }
@@ -235,6 +241,15 @@ export const ErrorSchema = z.object({
 export type TErrorSchema = z.infer<typeof ErrorSchema>;
 
 export function errorResponse(c: Context, code: z.infer<typeof ErrorCode>, message?: string) {
+  inActiveSpan((span) => {
+    span?.setAttributes({
+      error_code: code,
+    });
+    span?.setStatus({
+      code: SpanStatusCode.ERROR,
+      message: `${message ?? "error"}(${c.req.method} ${c.req.path})`,
+    });
+  });
   return c.json<z.infer<typeof ErrorSchema>>(
     {
       success: false,

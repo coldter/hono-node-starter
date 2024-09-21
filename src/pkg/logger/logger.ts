@@ -10,6 +10,7 @@ export const logger = createLogger({
       : new transports.Console({
           format: format.combine(format.timestamp(), format.colorize(), format.simple()),
         }),
+    // new OpenTelemetryTransportV3(),
   ],
   exitOnError: false,
 });

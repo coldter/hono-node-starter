@@ -1,5 +1,5 @@
 import { db } from "@/database";
-import { accounts, type Role } from "@/database/schema";
+import { type Role, accounts } from "@/database/schema";
 import { lucia } from "@/pkg/auth";
 import type { Context } from "@/pkg/hono/app";
 import type { TypeId } from "@/pkg/utils/typeid";
