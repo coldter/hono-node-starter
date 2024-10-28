@@ -22,7 +22,7 @@ export const accounts = pgTable(
     role: varchar("role", { enum: roleEnum }).notNull().default("user"),
     passwordHash: varchar("password_hash", { length: 255 }).notNull(),
     lastLoginAt: bigint("last_login_at", { mode: "number" }),
-    mobile: varchar("mobile", { length: 20 }),
+    mobile: varchar("mobile", { length: 20 }).notNull(),
   },
   (t) => ({
     publicIdIndex: uniqueIndex("public_id_idx_acc").on(t.publicId),
@@ -38,6 +38,9 @@ export const accountRelations = relations(accounts, (r) => ({
 export type AccountDbType = typeof accounts.$inferSelect;
 export type InsertAccountDbType = typeof accounts.$inferInsert;
 
+/**
+ * @description not used with firebase auth
+ */
 export const sessions = pgTable(
   "sessions",
   {

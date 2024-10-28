@@ -1,6 +1,6 @@
 import { db } from "@/database";
 import { type Role, accounts } from "@/database/schema";
-import { lucia } from "@/pkg/auth";
+import { lucia } from "@/pkg/auth/lucia";
 import type { Context } from "@/pkg/hono/app";
 import type { TypeId } from "@/pkg/utils/typeid";
 import { eq } from "drizzle-orm";

@@ -3,6 +3,7 @@ import { inActiveSpan } from "@/pkg/otel/helpers";
 import { parseZodErrorMessage } from "@/pkg/utils/zod-error";
 import { z } from "@hono/zod-openapi";
 import { SpanStatusCode } from "@opentelemetry/api";
+import { TransactionRollbackError } from "drizzle-orm";
 import type { Context } from "hono";
 import { HTTPException } from "hono/http-exception";
 import type { StatusCode } from "hono/utils/http-status";
@@ -199,6 +200,10 @@ export function handleError(err: Error, c: Context<HonoEnv>): Response {
     );
   }
 
+  // * Drizzle ORM TransactionRollbackError
+  if (err instanceof TransactionRollbackError) {
+  }
+
   /**
    * We're lost here, all we can do is return a 500 and log it to investigate
    */
@@ -212,11 +217,12 @@ export function handleError(err: Error, c: Context<HonoEnv>): Response {
 
   return c.json(
     {
+      success: false,
       error: {
         code: "INTERNAL_SERVER_ERROR",
         message: err.message ?? "something unexpected happened",
-        // requestId: c.get("requestId"),
       },
+      requestId: c.get("requestId") ?? "unknown",
     },
     { status: 500 },
   );

@@ -1,3 +1,4 @@
+import { SpanStatusCode } from "@opentelemetry/api";
 import { createMiddleware } from "hono/factory";
 import { getTracer, inActiveSpan } from "./helpers";
 
@@ -25,6 +26,7 @@ export const opentelemetry = (name?: string) => {
           if (e instanceof Error) {
             span?.recordException(e);
           }
+          span?.setStatus({ code: SpanStatusCode.ERROR });
           throw e;
         });
         span?.setAttributes({

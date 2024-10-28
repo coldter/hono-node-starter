@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS "accounts" (
 	"role" varchar DEFAULT 'user' NOT NULL,
 	"password_hash" varchar(255) NOT NULL,
 	"last_login_at" bigint,
-	"mobile" varchar(20)
+	"mobile" varchar(20) NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "sessions" (

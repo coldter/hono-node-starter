@@ -1,5 +1,4 @@
 import { appEnv } from "@/pkg/env/env";
-import { DiagConsoleLogger, DiagLogLevel, diag } from "@opentelemetry/api";
 import { logs } from "@opentelemetry/api-logs";
 import { OTLPLogExporter } from "@opentelemetry/exporter-logs-otlp-http";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-http";
@@ -11,8 +10,9 @@ import { CompressionAlgorithm } from "@opentelemetry/otlp-exporter-base";
 import { Resource } from "@opentelemetry/resources";
 import { BatchLogRecordProcessor, LoggerProvider } from "@opentelemetry/sdk-logs";
 import { BatchSpanProcessor, NodeTracerProvider } from "@opentelemetry/sdk-trace-node";
+// import { diag, DiagConsoleLogger, DiagLogLevel } from "@opentelemetry/api";
 
-diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ALL);
+// diag.setLogger(new DiagConsoleLogger(), DiagLogLevel.ALL);
 export const setupOpenTelemetry = ({
   name,
   version,

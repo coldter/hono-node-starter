@@ -42,8 +42,7 @@
       ".wrangler",
       ".react-email",
       ".contentlayer",
-      ".output",
-      "./temp.ts"
+      ".output"
     ]
   },
   "formatter": {

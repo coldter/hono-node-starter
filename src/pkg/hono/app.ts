@@ -5,6 +5,7 @@ import { opentelemetry } from "@/pkg/otel/hono";
 import { typeIdGenerator, validateTypeId } from "@/pkg/utils/typeid";
 import { OpenAPIHono } from "@hono/zod-openapi";
 import type { Context as GenericContext, Next } from "hono";
+import { contextStorage } from "hono/context-storage";
 import { prettyJSON } from "hono/pretty-json";
 
 function setupCommonIgnoreRoutes<T extends HonoEnv>(app: OpenAPIHono<T>) {
@@ -42,6 +43,7 @@ export function newApp() {
     defaultHook: handleZodError,
   });
 
+  app.use(contextStorage());
   app.use(opentelemetry("api/hono"));
   app.use(assignRequestId);
   setupCommonIgnoreRoutes(app);

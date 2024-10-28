@@ -1,10 +1,10 @@
 import type { App } from "@/pkg/hono/app";
-import { registerV1ApiAuthUserCheckEmail } from "@/routes/auth/v1_api_auth_user_check_email";
-import { registerV1ApiAuthUserSignup } from "@/routes/auth/v1_api_auth_user_signup";
-import { registerV1ApiUserLoginWithEmailAndPass } from "@/routes/auth/v1_api_user_login_with_email_and_pass";
+import { registerV1ApiCheckProfileCompletion } from "@/routes/auth/v1_api_check_profile_completion";
+import { registerV1ApiCheckUserRegistrationWithPhoneNumber } from "@/routes/auth/v1_api_check_user_registration_with_phone_number";
+import { registerV1ApiCreateUserWithPhoneVerification } from "@/routes/auth/v1_api_create_user_with_phone_verification";
 
 export const setupAuthApiRoutes = (app: App) => {
-  registerV1ApiUserLoginWithEmailAndPass(app);
-  registerV1ApiAuthUserSignup(app);
-  registerV1ApiAuthUserCheckEmail(app);
+  registerV1ApiCheckProfileCompletion(app);
+  registerV1ApiCheckUserRegistrationWithPhoneNumber(app);
+  registerV1ApiCreateUserWithPhoneVerification(app);
 };

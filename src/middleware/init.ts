@@ -1,4 +1,5 @@
 import { db } from "@/database";
+import { firebaseAuth } from "@/pkg/firebase/auth";
 import type { HonoEnv } from "@/pkg/hono/env";
 import { logger } from "@/pkg/logger/logger";
 import type { MiddlewareHandler } from "hono";
@@ -12,6 +13,8 @@ export function init(): MiddlewareHandler<HonoEnv> {
     c.set("services", {
       db: db,
     });
+    // * Set the firebaseAuth context
+    c.set("firebaseAuth", firebaseAuth);
 
     await next();
   };

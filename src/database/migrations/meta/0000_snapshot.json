@@ -1,5 +1,5 @@
 {
-  "id": "1ba64df6-3dc1-4c39-aa51-9a0b6a51346e",
+  "id": "a2b3aa58-6807-46de-b50d-6c6fba577f63",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -80,7 +80,7 @@
           "name": "mobile",
           "type": "varchar(20)",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {

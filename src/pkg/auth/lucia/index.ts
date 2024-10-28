@@ -1,6 +1,6 @@
 import { db } from "@/database";
 import type { AccountDbType } from "@/database/schema";
-import { CustomLuciaAuthAdapter } from "@/pkg/auth/lucia.adapter";
+import { CustomLuciaAuthAdapter } from "@/pkg/auth/lucia/lucia.adapter";
 import { COOKIE_SESSION } from "@/pkg/const/values";
 import { appEnv } from "@/pkg/env/env";
 import type { TypeId } from "@/pkg/utils/typeid";
