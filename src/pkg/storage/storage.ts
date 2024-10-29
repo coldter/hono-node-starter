@@ -1,8 +1,9 @@
 import { appEnv } from "@/pkg/env/env";
-import { createStorage, type StorageValue } from "unstorage";
+import type { UserRecord } from "firebase-admin/auth";
+import { seconds } from "itty-time";
+import { type StorageValue, createStorage } from "unstorage";
 import memoryDriver from "unstorage/drivers/memory";
 import redisDriver from "unstorage/drivers/redis";
-import { seconds } from "itty-time";
 
 function createCachedStorage<T extends StorageValue = StorageValue>(base: string, ttl: number) {
   return createStorage<T>({
@@ -18,6 +19,6 @@ function createCachedStorage<T extends StorageValue = StorageValue>(base: string
 }
 
 export const storage = {
-  // TODO: add types
-  firebaseUsers: createCachedStorage("firebase-users", seconds("1 hour")),
+  firebaseUsers: createCachedStorage<UserRecord>("firebase-users", seconds("1 hour")),
+  // dbAccount: createCachedStorage<AccountDbType>("db-account", seconds("1 hour")),
 };

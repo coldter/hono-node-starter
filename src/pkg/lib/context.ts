@@ -30,3 +30,10 @@ export const getCtxRequestId = () => {
 export const getCtxFirebaseAuth = () => {
   return getContext<HonoEnv>().get("firebaseAuth");
 };
+
+/**
+ * @throws {Error} context not found
+ */
+export const getCtxUser = () => {
+  return getContext<HonoEnv>().get("user");
+};

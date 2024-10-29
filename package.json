@@ -20,7 +20,8 @@
     "db:studio": "npm run load-env drizzle-kit studio --port 3333  --config=drizzle.config.ts",
     "db:migrate": "npm run load-env tsx src/database/migrate.ts",
     "ts:check": "tsc --noEmit",
-    "new:v1api": "hypergen new v1api"
+    "new:v1apiPublic": "hypergen new v1api",
+    "new:v1api": "hypergen new v1apiWithAuth"
   },
   "keywords": [],
   "author": "",

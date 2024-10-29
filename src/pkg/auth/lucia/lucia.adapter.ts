@@ -4,8 +4,6 @@ import { typeIdGenerator } from "@/pkg/utils/typeid";
 import { eq, inArray, lte } from "drizzle-orm";
 import type { Adapter, DatabaseSession, DatabaseUser, UserId } from "lucia";
 
-// TODO: Implement cache with unstorage
-
 export class CustomLuciaAuthAdapter implements Adapter {
   private readonly db: Database;
 

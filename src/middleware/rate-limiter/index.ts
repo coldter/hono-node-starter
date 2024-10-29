@@ -2,9 +2,9 @@ import { appEnv } from "@/pkg/env/env";
 import { errorResponse } from "@/pkg/errors/http";
 import type { HonoEnv } from "@/pkg/hono/env";
 import { ioredis } from "@/pkg/ioredis";
+import { getConnInfo } from "@hono/node-server/conninfo";
 import type { MiddlewareHandler } from "hono";
 import { seconds } from "itty-time";
-import { getConnInfo } from "@hono/node-server/conninfo";
 
 import {
   type IRateLimiterOptions,

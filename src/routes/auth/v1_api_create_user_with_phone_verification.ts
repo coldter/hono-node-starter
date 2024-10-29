@@ -113,7 +113,7 @@ export const registerV1ApiCreateUserWithPhoneVerification = (app: App) => {
 
       await firebaseAuth.setCustomUserClaims(insertedUser.publicId, {
         role: insertedUser.role,
-        isProfileComplete: true,
+        isProfileCompleted: true,
       });
 
       return insertedUser;
