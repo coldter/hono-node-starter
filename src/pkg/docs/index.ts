@@ -33,6 +33,10 @@ export const docs = (app: App, enable: boolean) => {
       description:
         "Authentication related endpoints. With complimentary endpoint to firebase auth.",
     },
+    {
+      name: "admin",
+      description: "Admin related endpoints.",
+    },
   ];
 
   app.doc31("/openapi.json", {

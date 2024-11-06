@@ -8,6 +8,13 @@ export const successWithoutDataSchema = z.object({
   success: z.boolean(),
 });
 
+export const withPaginationSchema = <T extends z.ZodTypeAny>(schema: T) => {
+  return z.object({
+    items: schema.array(),
+    total: z.number(),
+  });
+};
+
 export const successWithDataSchema = <T extends z.ZodTypeAny>(schema: T) =>
   z.object({ success: z.boolean(), data: schema });
 

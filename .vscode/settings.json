@@ -15,8 +15,9 @@
   "[ejs]": {
     "editor.defaultFormatter": "besthyhy.ejs-eta-beautify"
   },
-  "cSpell.words": ["openapi", "opentelemetry", "OTEL"],
-  "[env]": {
-    "editor.defaultFormatter": "IronGeek.vscode-env"
-  }
+  "cSpell.words": [
+    "openapi",
+    "opentelemetry",
+    "OTEL"
+  ],
 }

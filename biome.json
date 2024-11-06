@@ -43,7 +43,8 @@
       ".react-email",
       ".contentlayer",
       ".output",
-      "temp*.ts"
+      "temp*.ts",
+      ".vscode/settings.json"
     ]
   },
   "formatter": {
@@ -60,7 +61,8 @@
       ".react-email",
       ".contentlayer",
       ".output",
-      "database/migrations"
+      "database/migrations",
+      ".vscode/settings.json"
     ]
   },
   "javascript": {

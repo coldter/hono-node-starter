@@ -6,10 +6,12 @@ import { Redis } from "ioredis";
 async function createRedisClient(url: string) {
   const client = new Redis(url);
 
-  await client.ping().catch((e) => {
+  const result = await client.ping().catch((e) => {
     logger.error("Failed to connect to Redis", { error: e });
     throw e;
   });
+
+  logger.info("Connected to Redis", { result });
 
   return client;
 }
